@@ -1,15 +1,19 @@
 package ca.saultcollege;
 
-import com.test.entities.VehicleEntity;
+import com.test.repository.InMemoryVehicleRepository;
+import com.test.repository.MySQLVehicleRepository;
+import com.test.repository.VehicleService;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Vehicle Inventory System ===");
+        // Step 1: Prompt user to choose data source
+        System.out.println("--- Vehicle Inventory System ---");
         System.out.println("Select data source:");
         System.out.println("1. In-Memory");
         System.out.println("2. MySQL Database");
@@ -17,15 +21,16 @@ public class Main {
 
         int choice = Integer.parseInt(scanner.nextLine());
 
-        Repository<VehicleEntity> repository;
+        InMemoryVehicleRepository repository;
         EntityManagerFactory emf = null;
 
+        // Step 2: Choose the correct repository based on user choice
         if (choice == 1) {
-            // The In-Memory Repository, contains vehicles
+            // In-Memory Repository
             repository = new InMemoryVehicleRepository();
-            System.out.println("Using In-Memory storage.\n");
+            System.out.println("Currently using in-memory storage.\n");
         } else if (choice == 2) {
-            //The MySQL Repository, contains vehicles
+            // MySQL Repository
             emf = Persistence.createEntityManagerFactory("VehiclePU");
             repository = new MySQLVehicleRepository(emf);
             System.out.println("Using MySQL database.\n");
@@ -35,14 +40,16 @@ public class Main {
             return;
         }
 
-        // Dependency Injection
+        // Step 3: Instantiate VehicleService, injecting the repository
         VehicleService vehicleService = new VehicleService(repository);
+
+        // Step 4: Instantiate App, injecting the VehicleService
         App app = new App(vehicleService);
 
-        // Runs the application
+        // Step 5: Call run() to start the application
         app.run();
 
-        // Cleanup
+        // Cleanup resources
         if (emf != null) {
             emf.close();
         }
