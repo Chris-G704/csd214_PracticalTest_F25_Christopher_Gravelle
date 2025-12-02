@@ -1,30 +1,54 @@
 package com.test.entities;
+
 import jakarta.persistence.*;
 
+/**
+ * CarEntity represents a car vehicle
+ * Extends VehicleEntity and adds car-specific properties
+ */
 @Entity
-@DiscriminatorValue("CAR") // this is the value of the car, when the value is car, it will show the value "CAR"
+@DiscriminatorValue("CAR")
 public class CarEntity extends VehicleEntity {
 
     @Column(name = "num_doors")
-    private int numvehicleDoors;
+    private int numDoors;
 
-    // Default constructor
+    /**
+     * Default constructor required by JPA
+     */
     public CarEntity() {
     }
 
-    // Constructor with fields
+    /**
+     * Constructor with all fields
+     * @param make The make of the car
+     * @param model The model of the car
+     * @param year The year of the car
+     * @param numDoors The number of doors
+     */
     public CarEntity(String make, String model, int year, int numDoors) {
         super(make, model, year);
-        this.numvehicleDoors = numDoors;
+        this.numDoors = numDoors;
     }
 
     // Getters and Setters
-    public int getNumDoors() { // get the number of doors
-        return numvehicleDoors; // return the number of doors
+
+    public int getNumDoors() {
+        return numDoors;
     }
 
-    public void setNumDoors(int numDoors) { //set the number of doors
-        this.numvehicleDoors = numDoors; // value of the doors
+    public void setNumDoors(int numDoors) {
+        this.numDoors = numDoors;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + getId() +
+                ", make='" + getMake() + '\'' +
+                ", model='" + getModel() + '\'' +
+                ", year=" + getYear() +
+                ", numDoors=" + numDoors +
+                '}';
     }
 }
-
