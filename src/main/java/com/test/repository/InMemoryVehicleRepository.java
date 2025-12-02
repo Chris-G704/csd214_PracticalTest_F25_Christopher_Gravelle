@@ -21,10 +21,10 @@ public class InMemoryVehicleRepository implements Repository<VehicleEntity> {
     @Override
     public VehicleEntity save(VehicleEntity entity) {
         if (entity.getId() == null) {
-            // New entity - assign ID
+
             entity.setId(nextId++);
         }
-        // Store in HashMap
+
         storage.put(entity.getId(), entity);
         return entity;
     }

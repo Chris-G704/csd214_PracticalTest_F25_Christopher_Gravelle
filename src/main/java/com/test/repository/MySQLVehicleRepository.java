@@ -43,10 +43,10 @@ public class MySQLVehicleRepository implements Repository<VehicleEntity> {
             em.getTransaction().begin();
 
             if (entity.getId() == null) {
-                // New entity - persist it
+
                 em.persist(entity);
             } else {
-                // Existing entity - merge it
+
                 entity = em.merge(entity);
             }
 

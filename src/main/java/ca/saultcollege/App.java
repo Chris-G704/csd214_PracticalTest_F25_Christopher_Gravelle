@@ -14,20 +14,20 @@ public class App {
     private final VehicleService vehicleService;
     private final Scanner scanner;
 
-    // Constructor receives VehicleService via dependency injection
+
     public App(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
         this.scanner = new Scanner(System.in);
     }
 
-    // Main application loop
+
     public void run() {
         boolean running = true;
 
         while (running) {
             displayMenu();
             int choice = getIntInput("Enter your choice: ");
-          // give the user choices, 1-5.
+
             switch (choice) {
                 case 1 -> addVehicle();
                 case 2 -> listAllVehicles();
@@ -46,7 +46,7 @@ public class App {
         scanner.close();
     }
 
-    // These are the display menu options
+
     private void displayMenu() {
         System.out.println("Vehicle Inventory Management");
         System.out.println("1. Add Vehicle");
@@ -56,7 +56,7 @@ public class App {
         System.out.println("5. Quit progam");
     }
 
-    // Add a new vehicle (car or motorcycle)
+
     private void addVehicle() {
         System.out.println("\n Add Vehicle");
         System.out.println("1. Car");
@@ -88,7 +88,7 @@ public class App {
         }
     }
 
-    // List all vehicles in inventory
+
     private void listAllVehicles() {
         System.out.println("\nAll Vehicles");
         List<VehicleEntity> vehicles = vehicleService.getAllVehicles();
@@ -112,7 +112,7 @@ public class App {
         }
     }
 
-    // Update an existing vehicle
+
     private void updateVehicle() {
         System.out.println("\n Update Vehicle");
         long id = getIntInput("Enter vehicle ID to update: ");
@@ -145,7 +145,7 @@ public class App {
             vehicle.setYear(year);
         }
 
-        // Update type-specific fields
+
         if (vehicle instanceof CarEntity car) {
             System.out.print("Enter new number of doors (or 0 to keep current): ");
             int numDoors = getIntInput("");
@@ -164,7 +164,7 @@ public class App {
         System.out.println("Vehicle updated successfully!");
     }
 
-    // Delete a vehicle
+
     private void deleteVehicle() {
         System.out.println("\n--- Delete Vehicle ---");
         long id = getIntInput("Enter vehicle ID to delete: ");
@@ -180,7 +180,7 @@ public class App {
         System.out.println("Vehicle deleted successfully!");
     }
 
-    // Helper method to get integer input with validation
+
     private int getIntInput(String prompt) {
         while (true) {
             try {
@@ -193,7 +193,7 @@ public class App {
         }
     }
 
-    // Helper method to display vehicle info
+
     private String getVehicleDisplay(VehicleEntity vehicle) {
         if (vehicle instanceof CarEntity car) {
             return "[CAR] " + car.getMake() + " " + car.getModel() +
